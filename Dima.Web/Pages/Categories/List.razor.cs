@@ -21,6 +21,8 @@ public partial class ListCategoriesPage : ComponentBase
     [Inject]
     public ISnackbar Snackbar { get; set; } = null!;
     [Inject]
+    public IDialogService DialogService { get; set; } = null!;
+    [Inject]
     public ICategoryHandler Handler { get; set; } = null!;
 
     #endregion
@@ -52,6 +54,34 @@ public partial class ListCategoriesPage : ComponentBase
 
     #region Methods
 
+    public async void OnDeleteButtonClickedAsync(long id, string title)
+    {
+        var result = await DialogService.ShowMessageBox("ATENÇÂO", 
+            $"Ao prosseguir a categoria {title} será excluída. Está é uma ação irreversível! Deseja continuar?",
+            yesText: "EXCLUIR",
+            cancelText: "Cancelar");
+
+        if (result is true)
+            await OnDeleteAsync(id, title);
+        
+        StateHasChanged();
+    }
+
+    public async Task OnDeleteAsync(long id, string title)
+    {
+        try
+        {
+            var request = new DeleteCategoryRequest { Id = id };
+            await Handler.DeleteAsync(request);
+            Categories.RemoveAll(x => x.Id == id);
+            Snackbar.Add($"Categoria {title} excluída", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+    
     public Func<Category, bool> Filter => category =>
     {
         if (string.IsNullOrEmpty(SearchTerm))
