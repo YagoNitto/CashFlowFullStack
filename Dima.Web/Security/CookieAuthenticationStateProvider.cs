@@ -44,7 +44,7 @@ public class CookieAuthenticationStateProvider(IHttpClientFactory clientFactory)
     {
         try
         {
-            return await _client.GetFromJsonAsync<User>("v1/identity/manage/info");
+            return await _client.GetFromJsonAsync<User?>("v1/identity/manage/info");
         }
         catch
         {
