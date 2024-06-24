@@ -17,6 +17,11 @@ Este projeto é um sistema de gerenciamento financeiro que permite aos usuários
   - [x] Visualização de transações existentes.
   - [x] Edição de transações.
   - [x] Exclusão de transações.
+  - [x] Busca de transações por período. 
+
+- [x] **Sistema de login**
+  - [x] Cadastro de usuário.
+  - [x] Diferentes níveis de permissões.
 
 ## Requisitos
 
