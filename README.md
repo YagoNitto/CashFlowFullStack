@@ -23,7 +23,7 @@ Este projeto é um sistema de gerenciamento financeiro que permite aos usuários
   - [x] Cadastro de usuário.
   - [x] Diferentes níveis de permissões.
 
-## Requisitos
+## Tecnologias
 
 - **Back-end**: ASP.NET Core
 - **Front-end**: Blazor Web Assembly, MudBlazor
