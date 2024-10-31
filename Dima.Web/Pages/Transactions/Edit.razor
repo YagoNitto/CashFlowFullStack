@@ -1,0 +1,63 @@
+@page "/lancamentos/editar/{id}"
+@inherits EditTransactionPage
+
+<MudText Typo="Typo.h3">Editar Lançamento</MudText>
+
+<MudPaper Class="pa-8 mt-4">
+    <EditForm Model="@InputModel" OnValidSubmit="OnValidSubmitAsync">
+        <DataAnnotationsValidator/>
+
+        <MudTextField Label="Título"
+                      HelperText="Campo obrigatório"
+                      @bind-Value="InputModel.Title"
+                      For="@(() => InputModel.Title)"/>
+
+        <MudTextField Label="Quanto?"
+                      T="decimal"
+                      Format="C"
+                      Variant="Variant.Text"
+                      HelperText="Informe o valor que será pago ou recebido"
+                      @bind-Value="InputModel.Amount"
+                      For="@(() => InputModel.Amount)"
+                      Class="mt-5"/>
+
+        <MudDatePicker Label="Quando?"
+                       @bind-Date="@InputModel.PaidOrReceivedAt"
+                       HelperText="Selecione a data que o valor será pago ou recebido"
+                       Class="mt-5"/>
+        
+        <MudSelect T="ETransactionType"
+                   Label="Tipo de Movimentação"
+                   AnchorOrigin="Origin.BottomCenter"
+                   @bind-Value="InputModel.Type"
+                   Class="mt-5">
+            <MudSelectItem T="ETransactionType" Value="ETransactionType.Deposit">
+                Entrada
+            </MudSelectItem>
+            <MudSelectItem T="ETransactionType" Value="ETransactionType.Withdraw">
+                Saída
+            </MudSelectItem>
+        </MudSelect>
+        
+        <MudSelect 
+            T="Guid" 
+            Label="Categoria" 
+            @bind-Value="InputModel.CategoryId"
+            AnchorOrigin="Origin.BottomCenter"
+            Class="mt-5">
+            @foreach (var category in Categories)
+            {
+                <MudSelectItem T="Guid" Value="@category.Id">
+                    @category.Title
+                </MudSelectItem>
+            }
+        </MudSelect>
+        
+        <MudButton ButtonType="ButtonType.Submit"
+                   Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   Class="mt-5">
+            Salvar
+        </MudButton>
+    </EditForm>
+</MudPaper>
